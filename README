@@ -1,0 +1,10 @@
+steps:- 
+go mod init loan-service
+go mod tidy
+
+The API ensures:
+
+    State transitions only move forward.
+    Necessary approvals, investments, and disbursement validations.
+    Investors receive agreement letters upon full investment.
+    Loans are properly tracked through each phase.
