@@ -1,6 +1,7 @@
-package main_test
+package main
 
 import (
+	"fmt"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -89,7 +90,7 @@ func TestApproveLoan(t *testing.T) {
 		"fieldValidatorId": "emp123",
 		"approvalDate":    time.Now(),
 	}
-	approveRes := performRequest(router, "POST", "/loans/"+string(rune(createdLoan.ID))+"/approve", approvalPayload)
+	approveRes := performRequest(router, "POST", "/loans/"+fmt.Sprintf("%d", createdLoan.ID)+"/approve", approvalPayload)
 	assert.Equal(t, http.StatusOK, approveRes.Code)
 
 	// Validate that state is updated
@@ -116,7 +117,7 @@ func TestInvestLoan(t *testing.T) {
 
 	// Invest in loan
 	investmentPayload := gin.H{"amount": 30000}
-	investRes := performRequest(router, "POST", "/loans/"+string(rune(loan.ID))+"/invest", investmentPayload)
+	investRes := performRequest(router, "POST", "/loans/"+fmt.Sprintf("%d", loan.ID)+"/invest", investmentPayload)
 	assert.Equal(t, http.StatusOK, investRes.Code)
 
 	// Validate that state is updated
@@ -146,7 +147,7 @@ func TestDisburseLoan(t *testing.T) {
 		"fieldOfficerId":     "emp456",
 		"disbursementDate":   time.Now(),
 	}
-	disburseRes := performRequest(router, "POST", "/loans/"+string(rune(loan.ID))+"/disburse", disbursePayload)
+	disburseRes := performRequest(router, "POST", "/loans/"+fmt.Sprintf("%d", loan.ID)+"/disburse", disbursePayload)
 	assert.Equal(t, http.StatusOK, disburseRes.Code)
 
 	// Validate that state is updated
